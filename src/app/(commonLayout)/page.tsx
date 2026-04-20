@@ -1,10 +1,14 @@
-import Image from "next/image";
+import { ModeToggle } from "@/components/layout/ToogleMode";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-        ismail Nayef
-    </div>
-  );
+  return <div className="max-w-7xl mx-auto">This is the not ok
+    
+  </div>;
 }
-   
