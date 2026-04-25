@@ -1,14 +1,15 @@
-import { ModeToggle } from "@/components/layout/ToogleMode";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import Footer from "@/components/layout/footer";
+import HowItWorks from "@/components/modules/home/booking-flow";
+import CourseSection from "@/components/modules/home/featured-tutors";
+import Hero from "@/components/modules/home/hero-section";
 
 export default function Home() {
-  return <div className="max-w-7xl mx-auto">This is the not ok
-    
-  </div>;
+  return (
+    <div>
+      <Hero />
+      <CourseSection />
+      <HowItWorks/>
+      <Footer/>
+    </div>
+  );
 }

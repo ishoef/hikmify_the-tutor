@@ -6,7 +6,7 @@ export default function CommonLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div>
-      <div className="max-w-7xl mx-auto ">
+      <div className="sticky top-0 bg-background z-50">
         <Navbar1 />
       </div>
       <div>{children}</div>

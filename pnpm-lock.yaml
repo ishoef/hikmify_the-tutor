@@ -32,9 +32,12 @@ importers:
       react-dom:
         specifier: 19.2.4
         version: 19.2.4(react@19.2.4)
+      react-icons:
+        specifier: ^5.6.0
+        version: 5.6.0(react@19.2.4)
       shadcn:
-        specifier: ^4.3.0
-        version: 4.3.0(@types/node@20.19.39)(typescript@5.9.3)
+        specifier: ^4.3.1
+        version: 4.3.1(@types/node@20.19.39)(typescript@5.9.3)
       tailwind-merge:
         specifier: ^3.5.0
         version: 3.5.0
@@ -3188,6 +3191,11 @@ packages:
     peerDependencies:
       react: ^19.2.4
 
+  react-icons@5.6.0:
+    resolution: {integrity: sha512-RH93p5ki6LfOiIt0UtDyNg/cee+HLVR6cHHtW3wALfo+eOHTp8RnU2kRkI6E+H19zMIs03DyxUG/GfZMOGvmiA==}
+    peerDependencies:
+      react: '*'
+
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -3332,8 +3340,8 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  shadcn@4.3.0:
-    resolution: {integrity: sha512-7vhnBh2LVLyxOd1ZQWwXv7OATCnQcxdqc8FbZdNigZriNOwDsHklQmPpvPt1jcrFK5mzMI+cyuAYv8WzERx2Og==}
+  shadcn@4.3.1:
+    resolution: {integrity: sha512-X3XodbqNKQLCoR4sZZLMKrx2XjfhSsoDLN5+7TLsEx/uDG2P3iyfOLfBlU+z7BVOpkFkbWCEA0LlbGqWg1oeyQ==}
     hasBin: true
 
   sharp@0.34.5:
@@ -7042,6 +7050,10 @@ snapshots:
       react: 19.2.4
       scheduler: 0.27.0
 
+  react-icons@5.6.0(react@19.2.4):
+    dependencies:
+      react: 19.2.4
+
   react-is@16.13.1: {}
 
   react-remove-scroll-bar@2.3.8(@types/react@19.2.14)(react@19.2.4):
@@ -7221,7 +7233,7 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shadcn@4.3.0(@types/node@20.19.39)(typescript@5.9.3):
+  shadcn@4.3.1(@types/node@20.19.39)(typescript@5.9.3):
     dependencies:
       '@babel/core': 7.29.0
       '@babel/parser': 7.29.2
