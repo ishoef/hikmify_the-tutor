@@ -101,7 +101,7 @@ const Navbar1 = ({
     //   ],
     // },
     { title: "Tutors", url: "/tutors" },
-    { title: "Blog", url: "#" },
+    { title: "Blog", url: "/blog" },
   ],
   auth = {
     login: { title: "Login", url: "/login" },

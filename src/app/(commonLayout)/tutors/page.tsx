@@ -1,5 +1,8 @@
-import React from "react";
+// app/tutors/page.tsx
 
-export default function TutorPage() {
-  return <div className="container mx-auto px-4">TutorPage</div>;
+import TutorsPage from "@/components/modules/tutor/tutorPage";
+
+
+export default function Tutors() {
+  return <TutorsPage />;
 }

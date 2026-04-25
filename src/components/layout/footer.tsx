@@ -71,16 +71,16 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4 text-foreground">Company</h4>
             <div className="flex flex-col gap-3 text-sm text-muted-foreground">
-              <Link href="#" className="hover:text-[#153151] transition">
+              <Link href="/about" className="hover:text-[#153151] transition">
                 About Us
               </Link>
               <Link href="#" className="hover:text-[#153151] transition">
                 Careers
               </Link>
-              <Link href="#" className="hover:text-[#153151] transition">
+              <Link href="/contact" className="hover:text-[#153151] transition">
                 Contact
               </Link>
-              <Link href="#" className="hover:text-[#153151] transition">
+              <Link href="/privacy-policy" className="hover:text-[#153151] transition">
                 Privacy Policy
               </Link>
             </div>
@@ -116,13 +116,13 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} HikmiFy. All rights reserved.</p>
 
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-[#153151] transition">
+            <Link href="/terms" className="hover:text-[#153151] transition">
               Terms
             </Link>
-            <Link href="#" className="hover:text-[#153151] transition">
+            <Link href="/privacy-policy" className="hover:text-[#153151] transition">
               Privacy
             </Link>
-            <Link href="#" className="hover:text-[#153151] transition">
+            <Link href="/cookie-policy" className="hover:text-[#153151] transition">
               Cookies
             </Link>
           </div>
