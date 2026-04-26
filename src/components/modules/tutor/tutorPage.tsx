@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Star, Clock, Users, Award, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useMemo } from "react";
+import Link from "next/link";
+import BookingModal from "@/components/modals/tutorBookingModal";
 
 const allTutors = [
   {
@@ -279,15 +281,20 @@ export default function TutorsPage() {
                 </div>
 
                 {/* Buttons */}
-                <div className="flex gap-3">
-                  <Button className="flex-1 bg-[#153151] hover:bg-[#1f4a7a] text-white rounded-2xl py-6 text-base">
-                    Book Session
-                  </Button>
+                <div className="flex flex-col gap-3">
+                  {/* Booking Button */}
+                  <BookingModal
+                    tutorId="4ec3ee6f-4942-4df2-8c07-92c7d242b8ff"
+                    categoryId="b0c26c46-11eb-4ef4-8b70-aa7e9815f3b2"
+                    tutorName={"ismail"}
+                    price={24}
+                    availability={["sunday", "monday", "thuesday"]}
+                  />
                   <Button
                     variant="outline"
-                    className="flex-1 rounded-2xl py-6 text-base"
+                    className="flex-1 rounded-2xl py-2 text-base"
                   >
-                    View Profile
+                    <Link href={`/tutors/${tutor.id}`}>View Profile</Link>{" "}
                   </Button>
                 </div>
               </div>
