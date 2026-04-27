@@ -45,20 +45,23 @@ export default function BookingModal({
 
   const totalPrice = price * duration;
 
-  /* ================= VALIDATION ================= */
   const validate = () => {
-    if (!selectedDay || !selectedTime) return "Select day & time";
-    if (duration < 1 || duration > 3) return "Duration must be 1–3 hours";
+    if (!selectedDay || !selectedTime) return "Please select a day and time";
+    if (duration < 1 || duration > 3)
+      return "Duration must be between 1–3 hours";
 
     const wordCount = notes.trim().split(/\s+/).length;
-    if (wordCount < 5) return "Notes must be at least 5 words";
+    if (wordCount < 5) return "Notes must contain at least 5 words";
 
     return "";
   };
 
   const handleConfirm = () => {
     const err = validate();
-    if (err) return setError(err);
+    if (err) {
+      setError(err);
+      return;
+    }
 
     setError("");
 
@@ -68,48 +71,46 @@ export default function BookingModal({
       bookingDate: selectedDay,
       startTime: selectedTime,
       duration,
-      notes,
+      notes: notes.trim(),
       meetingLink: meetingLink || null,
     };
 
-    console.log("BOOKING:", bookingData);
-
+    console.log("BOOKING CONFIRMED:", bookingData);
     setConfirmed(true);
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full bg-[#153151] text-white py-6 rounded-2xl">
+        <Button className="w-full bg-[#153151] hover:bg-[#1f4a7a] text-white py-6 rounded-2xl text-base font-medium transition-all">
           Book Session
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="p-0 w-full max-w-full sm:max-w-lg lg:max-w-4xl h-[100dvh] sm:h-auto rounded-none sm:rounded-3xl flex flex-col">
+      <DialogContent className="p-0 w-full max-w-full sm:max-w-lg lg:max-w-4xl h-[100dvh] sm:h-auto rounded-none sm:rounded-3xl flex flex-col overflow-hidden">
         {/* HEADER */}
-        <div className="flex items-center justify-between px-5 py-4 border-b bg-background sticky top-0 z-10">
+        <div className="flex items-center justify-between px-6 py-5 border-b bg-background sticky top-0 z-10">
           <div>
-            <h2 className="font-semibold">Book Session</h2>
-            <p className="text-xs text-muted-foreground">{tutorName}</p>
+            <h2 className="font-semibold text-lg">Book a Session</h2>
+            <p className="text-sm text-muted-foreground">{tutorName}</p>
           </div>
 
           <DialogClose asChild>
-            <button>
-              <X size={20} />
+            <button className="p-2 hover:bg-muted rounded-full transition-colors">
+              <X size={22} />
             </button>
           </DialogClose>
         </div>
 
-        {/* ================= MOBILE VIEW ================= */}
-        <div className="flex-1 overflow-y-auto px-5 py-5 space-y-6 lg:hidden">
-          {/* DAY */}
+        {/* MOBILE VIEW */}
+        <div className="flex-1 overflow-y-auto px-6 py-6 space-y-8 lg:hidden">
+          {/* DAY SELECTION */}
           <div>
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-3">
               <Calendar size={18} className="text-[#153151]" />
-              <p className="text-sm font-medium">Day</p>
+              <p className="text-sm font-medium">Select Day</p>
             </div>
-
-            <div className="flex gap-2 overflow-x-auto pb-1">
+            <div className="flex gap-2 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide">
               {availability.map((day) => (
                 <button
                   key={day}
@@ -117,11 +118,11 @@ export default function BookingModal({
                     setSelectedDay(day);
                     setSelectedTime(null);
                   }}
-                  className={`px-4 py-2 rounded-full text-sm border whitespace-nowrap
+                  className={`px-5 py-2.5 rounded-2xl text-sm border whitespace-nowrap transition-all snap-start
                     ${
                       selectedDay === day
-                        ? "bg-[#153151] text-white"
-                        : "bg-muted"
+                        ? "bg-[#153151] text-white border-[#153151]"
+                        : "bg-muted hover:bg-muted/80 border-border"
                     }`}
                 >
                   {day}
@@ -130,24 +131,23 @@ export default function BookingModal({
             </div>
           </div>
 
-          {/* TIME */}
+          {/* TIME SELECTION */}
           {selectedDay && (
             <div>
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-3">
                 <Clock size={18} className="text-[#153151]" />
-                <p className="text-sm font-medium">Time</p>
+                <p className="text-sm font-medium">Select Time</p>
               </div>
-
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-3">
                 {times.map((time) => (
                   <button
                     key={time}
                     onClick={() => setSelectedTime(time)}
-                    className={`py-2 rounded-xl text-sm border
+                    className={`py-3 rounded-2xl border text-sm font-medium transition-all
                       ${
                         selectedTime === time
-                          ? "bg-[#153151] text-white"
-                          : "bg-muted"
+                          ? "bg-[#153151] text-white border-[#153151]"
+                          : "bg-muted hover:bg-muted/80 border-border"
                       }`}
                   >
                     {time}
@@ -159,20 +159,23 @@ export default function BookingModal({
 
           {/* DURATION */}
           <div>
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-3">
               <Users size={18} className="text-[#153151]" />
-              <p className="text-sm font-medium">Duration</p>
+              <p className="text-sm font-medium">Duration (hours)</p>
             </div>
-
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               {[1, 2, 3].map((d) => (
                 <button
                   key={d}
                   onClick={() => setDuration(d)}
-                  className={`flex-1 py-2 rounded-xl border
-                    ${duration === d ? "bg-[#153151] text-white" : "bg-muted"}`}
+                  className={`flex-1 py-3 rounded-2xl border font-medium transition-all
+                    ${
+                      duration === d
+                        ? "bg-[#153151] text-white border-[#153151]"
+                        : "bg-muted hover:bg-muted/80 border-border"
+                    }`}
                 >
-                  {d}h
+                  {d} Hour{d > 1 && "s"}
                 </button>
               ))}
             </div>
@@ -180,34 +183,46 @@ export default function BookingModal({
 
           {/* NOTES */}
           <div>
-            <p className="text-sm font-medium mb-2">Notes</p>
+            <p className="text-sm font-medium mb-2">
+              What do you need help with?
+            </p>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full border rounded-xl p-3 text-sm bg-background min-h-[100px]"
+              placeholder="Describe your goals or topics you'd like to cover..."
+              className="w-full border border-border rounded-2xl p-4 text-sm min-h-[110px] resize-y focus:border-[#153151]"
             />
+            <p className="text-xs text-muted-foreground mt-1.5">
+              Minimum 5 words
+            </p>
           </div>
 
-          {/* LINK */}
+          {/* MEETING LINK */}
           <div>
-            <p className="text-sm font-medium mb-2">Meeting Link</p>
+            <p className="text-sm font-medium mb-2">Meeting Link (Optional)</p>
             <Input
               value={meetingLink}
               onChange={(e) => setMeetingLink(e.target.value)}
+              placeholder="https://meet.google.com/..."
+              className="rounded-2xl"
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-sm bg-red-50 p-3 rounded-xl">
+              {error}
+            </p>
+          )}
         </div>
 
-        {/* ================= DESKTOP VIEW ================= */}
+        {/* ================= DESKTOP HORIZONTAL VIEW ================= */}
         <div className="hidden lg:flex flex-1">
-          {/* LEFT */}
-          <div className="flex-1 p-10 space-y-8">
-            {/* DAY */}
+          {/* Form Section */}
+          <div className="flex-1 p-10 space-y-9 overflow-y-auto">
+            {/* Day */}
             <div>
               <p className="font-semibold mb-3">Select Day</p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {availability.map((day) => (
                   <button
                     key={day}
@@ -215,11 +230,11 @@ export default function BookingModal({
                       setSelectedDay(day);
                       setSelectedTime(null);
                     }}
-                    className={`px-4 py-2 rounded-xl border
+                    className={`px-6 py-3 rounded-2xl border transition-all
                       ${
                         selectedDay === day
-                          ? "bg-[#153151] text-white"
-                          : "hover:bg-muted"
+                          ? "bg-[#153151] text-white border-[#153151]"
+                          : "border-border hover:bg-muted"
                       }`}
                   >
                     {day}
@@ -228,7 +243,7 @@ export default function BookingModal({
               </div>
             </div>
 
-            {/* TIME */}
+            {/* Time */}
             {selectedDay && (
               <div>
                 <p className="font-semibold mb-3">Select Time</p>
@@ -237,11 +252,11 @@ export default function BookingModal({
                     <button
                       key={time}
                       onClick={() => setSelectedTime(time)}
-                      className={`py-3 rounded-xl border
+                      className={`py-3.5 rounded-2xl border text-sm font-medium transition-all
                         ${
                           selectedTime === time
-                            ? "bg-[#153151] text-white"
-                            : "hover:bg-muted"
+                            ? "bg-[#153151] text-white border-[#153151]"
+                            : "border-border hover:bg-muted"
                         }`}
                     >
                       {time}
@@ -251,62 +266,75 @@ export default function BookingModal({
               </div>
             )}
 
-            {/* DURATION */}
+            {/* Duration */}
             <div>
-              <p className="font-semibold mb-3">Duration</p>
+              <p className="font-semibold mb-3">Session Duration</p>
               <div className="grid grid-cols-3 gap-3">
                 {[1, 2, 3].map((d) => (
                   <button
                     key={d}
                     onClick={() => setDuration(d)}
-                    className={`py-3 rounded-xl border
+                    className={`py-3.5 rounded-2xl border font-medium transition-all
                       ${
                         duration === d
-                          ? "bg-[#153151] text-white"
-                          : "hover:bg-muted"
+                          ? "bg-[#153151] text-white border-[#153151]"
+                          : "border-border hover:bg-muted"
                       }`}
                   >
-                    {d} Hour
+                    {d} Hour{d > 1 && "s"}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* NOTES */}
+            {/* Notes */}
             <div>
-              <p className="font-semibold mb-2">Notes</p>
+              <p className="font-semibold mb-2">Session Notes</p>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full border rounded-xl p-4"
-                rows={4}
+                placeholder="What would you like to focus on during this session?"
+                className="w-full border border-border rounded-2xl p-4 min-h-[130px] resize-y focus:border-[#153151]"
               />
             </div>
 
-            {/* LINK */}
+            {/* Meeting Link */}
             <div>
-              <p className="font-semibold mb-2">Meeting Link</p>
+              <p className="font-semibold mb-2">Meeting Link (Optional)</p>
               <Input
                 value={meetingLink}
                 onChange={(e) => setMeetingLink(e.target.value)}
+                placeholder="https://meet.google.com/..."
+                className="rounded-2xl py-3"
               />
             </div>
           </div>
 
-          {/* RIGHT SUMMARY */}
-          <div className="w-[360px] bg-muted/40 p-8 border-l">
-            <div className="sticky top-10 space-y-6">
-              <h3 className="font-semibold">Summary</h3>
+          {/* Summary Sidebar */}
+          <div className="w-96 bg-muted/50 border-l p-10 flex flex-col">
+            <div className="sticky top-10 space-y-8">
+              <h3 className="font-semibold text-lg">Booking Summary</h3>
 
-              <div className="text-sm space-y-2">
-                <p>Day: {selectedDay || "-"}</p>
-                <p>Time: {selectedTime || "-"}</p>
-                <p>Duration: {duration}h</p>
+              <div className="space-y-4 text-sm">
+                <div>
+                  <p className="text-muted-foreground">Date</p>
+                  <p className="font-medium">{selectedDay || "—"}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground">Time</p>
+                  <p className="font-medium">{selectedTime || "—"}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground">Duration</p>
+                  <p className="font-medium">
+                    {duration} hour{duration > 1 ? "s" : ""}
+                  </p>
+                </div>
               </div>
 
-              <div className="bg-card p-5 rounded-xl border">
-                <p>Total</p>
-                <p className="text-xl font-bold text-[#153151]">
+              <div className="bg-card p-6 rounded-2xl border">
+                <p className="text-muted-foreground text-sm">Total Amount</p>
+                <p className="text-3xl font-bold text-[#153151] mt-1">
                   ${totalPrice}
                 </p>
               </div>
@@ -314,30 +342,34 @@ export default function BookingModal({
               {!confirmed ? (
                 <Button
                   onClick={handleConfirm}
-                  className="w-full bg-[#153151] text-white py-5"
+                  disabled={!selectedDay || !selectedTime}
+                  className="w-full bg-[#153151] hover:bg-[#1f4a7a] py-6 text-base font-medium rounded-2xl"
                 >
-                  Confirm Booking
+                  Confirm Booking — ${totalPrice}
                 </Button>
               ) : (
-                <p className="text-green-600 text-center">
-                  ✅ Booking Confirmed
-                </p>
+                <div className="text-center py-6 text-green-600 font-medium">
+                  ✅ Booking Confirmed Successfully
+                </div>
               )}
 
               {error && (
-                <p className="text-red-500 text-sm text-center">{error}</p>
+                <p className="text-red-500 text-sm text-center bg-red-50 p-3 rounded-xl">
+                  {error}
+                </p>
               )}
             </div>
           </div>
         </div>
 
-        {/* MOBILE CTA */}
-        <div className="lg:hidden border-t p-4">
+        {/* MOBILE BOTTOM BAR */}
+        <div className="lg:hidden border-t p-5 bg-background sticky bottom-0 z-10">
           <Button
             onClick={handleConfirm}
-            className="w-full bg-[#153151] text-white py-5"
+            disabled={!selectedDay || !selectedTime}
+            className="w-full bg-[#153151] hover:bg-[#1f4a7a] py-6 rounded-2xl text-base font-medium"
           >
-            Confirm • ${totalPrice}
+            Confirm Booking — ${totalPrice}
           </Button>
         </div>
       </DialogContent>

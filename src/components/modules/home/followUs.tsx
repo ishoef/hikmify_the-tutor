@@ -46,7 +46,7 @@ const socials: SocialItem[] = [
 
 export default function FollowUs() {
   return (
-    <section className="py-20 bg-muted/40">
+    <section className="py-20 bg-background">
       <div className="container mx-auto px-6 lg:px-12 text-center">
         {/* HEADER */}
         <p className="text-sm text-muted-foreground mb-2">Our Social Network</p>

@@ -1,19 +1,27 @@
+import TutorSection from "@/components/modules/home/featured-tutors";
 import HowItWorks from "@/components/modules/home/booking-flow";
-import CourseSection from "@/components/modules/home/featured-tutors";
-import FollowUs from "@/components/modules/home/followUs";
+import Testimonial from "@/components/modules/home/testimonial";
+import States from "@/components/modules/home/states";
 import Hero from "@/components/modules/home/hero-section";
-import LearningSection from "@/components/modules/home/learningSection";
-import PlatformSection from "@/components/modules/home/platformSection";
+import Categories from "@/components/modules/home/categories";
+import FinalCTA from "@/components/modules/home/finalCTA";
+import OurVision from "@/components/modules/home/our-vision";
+import OurTeam from "@/components/modules/home/our-team";
+import FollowUs from "@/components/modules/home/followUs";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div>
+    <div className="bg-background">
       <Hero />
-      <CourseSection />
-      <HowItWorks />
-      <PlatformSection />
-      {/* <LearningSection/> */}
-      <FollowUs />
+      <States /> 
+      <TutorSection /> 
+      <Categories /> 
+      <HowItWorks /> 
+      <Testimonial /> 
+      <OurVision /> 
+      <OurTeam /> 
+      <FollowUs/>
+      <FinalCTA /> 
     </div>
   );
 }
