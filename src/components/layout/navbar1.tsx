@@ -26,6 +26,8 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "./ToogleMode";
+import Link from "next/link";
+import Logo from "../common/logo";
 
 interface MenuItem {
   title: string;
@@ -102,6 +104,9 @@ const Navbar1 = ({
     // },
     { title: "Tutors", url: "/tutors" },
     { title: "Blog", url: "/blog" },
+    { title: "Become a tutor", url: "/become-tutor" },
+    { title: "About Us", url: "/about" },
+    { title: "Contact", url: "/contact" },
   ],
   auth = {
     login: { title: "Login", url: "/login" },
@@ -117,30 +122,23 @@ const Navbar1 = ({
           {/* LEFT */}
           <div className="flex items-center gap-8">
             {/* Logo */}
-            <a href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#153151] flex items-center justify-center text-white font-bold">
-                H
-              </div>
-              <span className="text-lg font-semibold tracking-tight text-foreground">
-                HikmiFy
-              </span>
-            </a>
+            <Logo />
+          </div>
 
-            {/* Nav links */}
-            <div className="flex items-center gap-6">
-              {menu.map((item) => (
-                <a
-                  key={item.title}
-                  href={item.url}
-                  className="text-sm font-medium text-muted-foreground hover:text-[#153151] transition-colors relative group"
-                >
-                  {item.title}
+          {/* Nav links */}
+          <div className="flex items-center gap-3">
+            {menu.map((item) => (
+              <Link
+                key={item.title}
+                href={item.url}
+                className="relative px-4 py-2 text-base font-semibold text-foreground/80 rounded-lg transition-all hover:text-[#153151] hover:bg-[#153151]/5 group"
+              >
+                {item.title}
 
-                  {/* underline animation */}
-                  <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[#153151] transition-all group-hover:w-full" />
-                </a>
-              ))}
-            </div>
+                {/* underline */}
+                <span className="absolute left-1/2 -bottom-0.5 h-[2px] w-0 bg-[#153151] transition-all duration-300 group-hover:w-2/3 group-hover:-translate-x-1/2" />
+              </Link>
+            ))}
           </div>
 
           {/* RIGHT */}
@@ -165,49 +163,55 @@ const Navbar1 = ({
         </nav>
 
         {/* Mobile Menu */}
+
         <div className="block lg:hidden">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between h-14 px-3 border border-border rounded-xl bg-background/70 backdrop-blur-md shadow-sm">
             {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              />
-            </a>
+            <Logo />
+
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
+                <Button variant="outline" size="icon" className="rounded-xl">
                   <Menu className="size-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent className="overflow-y-auto">
-                <SheetHeader>
-                  <SheetTitle>
-                    <a href={logo.url} className="flex items-center gap-2">
-                      <img
-                        src={logo.src}
-                        className="max-h-8 dark:invert"
-                        alt={logo.alt}
-                      />
-                    </a>
-                  </SheetTitle>
-                </SheetHeader>
-                <div className="flex flex-col gap-6 p-4">
-                  <Accordion
-                    type="single"
-                    collapsible
-                    className="flex w-full flex-col gap-4"
-                  >
-                    {menu.map((item) => renderMobileMenuItem(item))}
-                  </Accordion>
 
-                  <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline">
-                      <a href={auth.login.url}>{auth.login.title}</a>
+              <SheetContent className="p-0 flex flex-col">
+                {/* HEADER */}
+                <div className="flex items-center justify-between px-5 py-4 border-b bg-background/80 backdrop-blur">
+                  <Logo />
+                </div>
+
+                {/* CONTENT */}
+                <div className="flex-1 overflow-y-auto px-5 py-6 space-y-6">
+                  {/* NAV LINKS */}
+                  <div className="flex flex-col gap-2">
+                    {menu.map((item) => (
+                      <Link
+                        key={item.title}
+                        href={item.url}
+                        className="text-base font-medium py-3 px-3 rounded-xl hover:bg-muted transition-colors"
+                      >
+                        {item.title}
+                      </Link>
+                    ))}
+                  </div>
+
+                  {/* DIVIDER */}
+                  <div className="border-t pt-5 space-y-3">
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="w-full rounded-xl"
+                    >
+                      <Link href={auth.login.url}>{auth.login.title}</Link>
                     </Button>
-                    <Button asChild>
-                      <a href={auth.signup.url}>{auth.signup.title}</a>
+
+                    <Button
+                      asChild
+                      className="w-full bg-[#153151] hover:bg-[#1f4a7a] text-white rounded-xl"
+                    >
+                      <Link href={auth.signup.url}>{auth.signup.title}</Link>
                     </Button>
                   </div>
                 </div>

@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Calendar, Clock, Users, X } from "lucide-react";
+import { toast } from "sonner"; // ✅ added
 
 type Props = {
   tutorId: string;
@@ -56,10 +57,13 @@ export default function BookingModal({
     return "";
   };
 
+  // ✅ ONLY CHANGE HERE
   const handleConfirm = () => {
     const err = validate();
+
     if (err) {
       setError(err);
+      toast.error(err); // ✅ toast added
       return;
     }
 
@@ -76,6 +80,11 @@ export default function BookingModal({
     };
 
     console.log("BOOKING CONFIRMED:", bookingData);
+
+    toast.success("Booking confirmed successfully 🎉", {
+      description: `${selectedDay} • ${selectedTime} • ${duration}h`,
+    });
+
     setConfirmed(true);
   };
 
@@ -89,15 +98,29 @@ export default function BookingModal({
 
       <DialogContent className="p-0 w-full max-w-full sm:max-w-lg lg:max-w-4xl h-[100dvh] sm:h-auto rounded-none sm:rounded-3xl flex flex-col overflow-hidden">
         {/* HEADER */}
-        <div className="flex items-center justify-between px-6 py-5 border-b bg-background sticky top-0 z-10">
-          <div>
-            <h2 className="font-semibold text-lg">Book a Session</h2>
-            <p className="text-sm text-muted-foreground">{tutorName}</p>
+        <div className="flex items-center justify-between px-6 py-5 border-b bg-background/80 backdrop-blur sticky top-0 z-10">
+          {/* LEFT */}
+          <div className="flex items-center gap-4">
+            {/* Avatar / Initial */}
+            <div className="w-10 h-10 rounded-xl bg-[#153151]/10 flex items-center justify-center text-[#153151] font-semibold">
+              {tutorName?.charAt(0)}
+            </div>
+
+            <div>
+              <h2 className="font-semibold text-lg text-foreground">
+                Book a Session
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                with{" "}
+                <span className="font-medium text-[#153151]">{tutorName}</span>
+              </p>
+            </div>
           </div>
 
+          {/* RIGHT */}
           <DialogClose asChild>
-            <button className="p-2 hover:bg-muted rounded-full transition-colors">
-              <X size={22} />
+            <button className="p-2 rounded-full hover:bg-[#153151]/10 transition-colors">
+              <X size={20} className="text-[#153151]" />
             </button>
           </DialogClose>
         </div>
@@ -190,7 +213,7 @@ export default function BookingModal({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Describe your goals or topics you'd like to cover..."
-              className="w-full border border-border rounded-2xl p-4 text-sm min-h-[110px] resize-y focus:border-[#153151]"
+              className="w-full border border-border rounded-2xl p-4 text-sm min-h-27.5 resize-y focus:border-[#153151]"
             />
             <p className="text-xs text-muted-foreground mt-1.5">
               Minimum 5 words
@@ -217,9 +240,7 @@ export default function BookingModal({
 
         {/* ================= DESKTOP HORIZONTAL VIEW ================= */}
         <div className="hidden lg:flex flex-1">
-          {/* Form Section */}
           <div className="flex-1 p-10 space-y-9 overflow-y-auto">
-            {/* Day */}
             <div>
               <p className="font-semibold mb-3">Select Day</p>
               <div className="flex flex-wrap gap-3">
@@ -243,7 +264,6 @@ export default function BookingModal({
               </div>
             </div>
 
-            {/* Time */}
             {selectedDay && (
               <div>
                 <p className="font-semibold mb-3">Select Time</p>
@@ -266,7 +286,6 @@ export default function BookingModal({
               </div>
             )}
 
-            {/* Duration */}
             <div>
               <p className="font-semibold mb-3">Session Duration</p>
               <div className="grid grid-cols-3 gap-3">
@@ -287,7 +306,6 @@ export default function BookingModal({
               </div>
             </div>
 
-            {/* Notes */}
             <div>
               <p className="font-semibold mb-2">Session Notes</p>
               <textarea
@@ -298,7 +316,6 @@ export default function BookingModal({
               />
             </div>
 
-            {/* Meeting Link */}
             <div>
               <p className="font-semibold mb-2">Meeting Link (Optional)</p>
               <Input
@@ -310,21 +327,25 @@ export default function BookingModal({
             </div>
           </div>
 
-          {/* Summary Sidebar */}
           <div className="w-96 bg-muted/50 border-l p-10 flex flex-col">
             <div className="sticky top-10 space-y-8">
               <h3 className="font-semibold text-lg">Booking Summary</h3>
 
-              <div className="space-y-4 text-sm">
-                <div>
+              <div className="bg-card border border-border rounded-2xl p-5 space-y-4 text-sm">
+                {/* DATE */}
+                <div className="flex items-center justify-between">
                   <p className="text-muted-foreground">Date</p>
                   <p className="font-medium">{selectedDay || "—"}</p>
                 </div>
-                <div>
+
+                {/* TIME */}
+                <div className="flex items-center justify-between">
                   <p className="text-muted-foreground">Time</p>
                   <p className="font-medium">{selectedTime || "—"}</p>
                 </div>
-                <div>
+
+                {/* DURATION */}
+                <div className="flex items-center justify-between">
                   <p className="text-muted-foreground">Duration</p>
                   <p className="font-medium">
                     {duration} hour{duration > 1 ? "s" : ""}
@@ -348,15 +369,39 @@ export default function BookingModal({
                   Confirm Booking — ${totalPrice}
                 </Button>
               ) : (
-                <div className="text-center py-6 text-green-600 font-medium">
-                  ✅ Booking Confirmed Successfully
+                <div className="border border-green-200 bg-green-50 rounded-2xl p-6 text-center space-y-3">
+                  {/* ICON */}
+                  <div className="flex justify-center">
+                    <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                      <span className="text-green-600 text-xl">✓</span>
+                    </div>
+                  </div>
+
+                  {/* TITLE */}
+                  <p className="text-green-700 font-semibold text-lg">
+                    Booking Confirmed
+                  </p>
+
+                  {/* DETAILS */}
+                  <p className="text-sm text-green-700/80">
+                    {selectedDay} • {selectedTime} • {duration}h
+                  </p>
                 </div>
               )}
 
               {error && (
-                <p className="text-red-500 text-sm text-center bg-red-50 p-3 rounded-xl">
-                  {error}
-                </p>
+                <div className="flex items-start gap-3 border border-red-200 bg-red-50 p-4 rounded-2xl text-sm">
+                  <div className="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 text-red-600 text-sm font-semibold">
+                    !
+                  </div>
+
+                  <div className="flex-1">
+                    <p className="text-red-700 font-medium">
+                      Something went wrong
+                    </p>
+                    <p className="text-red-600 mt-1">{error}</p>
+                  </div>
+                </div>
               )}
             </div>
           </div>
@@ -364,13 +409,34 @@ export default function BookingModal({
 
         {/* MOBILE BOTTOM BAR */}
         <div className="lg:hidden border-t p-5 bg-background sticky bottom-0 z-10">
-          <Button
-            onClick={handleConfirm}
-            disabled={!selectedDay || !selectedTime}
-            className="w-full bg-[#153151] hover:bg-[#1f4a7a] py-6 rounded-2xl text-base font-medium"
-          >
-            Confirm Booking — ${totalPrice}
-          </Button>
+          {!confirmed ? (
+            <Button
+              onClick={handleConfirm}
+              disabled={!selectedDay || !selectedTime}
+              className="w-full bg-[#153151] hover:bg-[#1f4a7a] py-6 text-base font-medium rounded-2xl"
+            >
+              Confirm Booking — ${totalPrice}
+            </Button>
+          ) : (
+            <div className="border border-green-200 bg-green-50 rounded-2xl p-6 text-center space-y-3">
+              {/* ICON */}
+              <div className="flex justify-center">
+                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                  <span className="text-green-600 text-xl">✓</span>
+                </div>
+              </div>
+
+              {/* TITLE */}
+              <p className="text-green-700 font-semibold text-lg">
+                Booking Confirmed
+              </p>
+
+              {/* DETAILS */}
+              <p className="text-sm text-green-700/80">
+                {selectedDay} • {selectedTime} • {duration}h
+              </p>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

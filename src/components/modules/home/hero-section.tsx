@@ -50,7 +50,7 @@ export default function Hero() {
         <div className="relative hidden lg:block w-130 xl:w-155 h-120 xl:h-120">
           <div className="relative w-full h-full rounded-[3rem] overflow-hidden shadow-2xl border border-white/80">
             <Image
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800"
+              src="https://plus.unsplash.com/premium_photo-1663075847012-c781e0d194ce?w=500"
               alt="Learning"
               fill
               className="object-cover"

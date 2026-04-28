@@ -142,51 +142,85 @@ export default function TutorsPage() {
         </div>
 
         {/* Filters & Search Bar */}
-        <div className="bg-card border border-border rounded-3xl p-6 mb-10">
-          <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search */}
-            <div className="flex-1">
-              <input
-                type="text"
-                placeholder="Search by name, subject, or keywords..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-5 py-3.5 rounded-2xl border border-border bg-background focus:outline-none focus:border-[#153151] text-base"
-              />
+        <div className="bg-card border border-border/60 rounded-3xl p-5 lg:p-6 mb-10 shadow-sm space-y-5">
+          {/* ===== SEARCH (PRIMARY) ===== */}
+          <div className="relative group">
+            <input
+              type="text"
+              placeholder="Search tutors..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 rounded-2xl border border-border/70 bg-background text-base
+      placeholder:text-muted-foreground
+      focus:outline-none focus:border-[#153151] focus:ring-2 focus:ring-[#153151]/20
+      transition-all"
+            />
+
+            {/* ICON LEFT */}
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-[#153151]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 01-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+          </div>
+
+          {/* ===== FILTER ROW ===== */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            {/* SUBJECT FILTER (CHIPS STYLE) */}
+            <div className="flex flex-wrap gap-2">
+              {subjects.map((subject) => (
+                <button
+                  key={subject}
+                  onClick={() => setSelectedSubject(subject)}
+                  className={`px-4 py-2 rounded-full text-sm border transition-all ${
+                    selectedSubject === subject
+                      ? "bg-[#153151] text-white border-[#153151]"
+                      : "border-border hover:bg-muted"
+                  }`}
+                >
+                  {subject}
+                </button>
+              ))}
             </div>
 
-            {/* Subject Filter */}
-            <select
-              value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              className="px-5 py-3.5 rounded-2xl border border-border bg-background focus:outline-none focus:border-[#153151]"
-            >
-              {subjects.map((subject) => (
-                <option key={subject} value={subject}>
-                  {subject}
-                </option>
-              ))}
-            </select>
+            {/* SORT DROPDOWN */}
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-muted-foreground whitespace-nowrap">
+                Sort by:
+              </span>
 
-            {/* Sort By */}
-            <select
-              value={sortBy}
-              onChange={(e) =>
-                setSortBy(
-                  e.target.value as
-                    | "rating"
-                    | "price-low"
-                    | "price-high"
-                    | "experience",
-                )
-              }
-              className="px-5 py-3.5 rounded-2xl border border-border bg-background focus:outline-none focus:border-[#153151]"
-            >
-              <option value="rating">Sort by Rating</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="experience">Most Experienced</option>
-            </select>
+              <select
+                value={sortBy}
+                onChange={(e) =>
+                  setSortBy(
+                    e.target.value as
+                      | "rating"
+                      | "price-low"
+                      | "price-high"
+                      | "experience",
+                  )
+                }
+                className="px-4 py-2.5 rounded-xl border border-border bg-background text-sm
+        focus:outline-none focus:border-[#153151] focus:ring-2 focus:ring-[#153151]/20
+        transition-all cursor-pointer"
+              >
+                <option value="rating">Rating</option>
+                <option value="price-low">Price ↑</option>
+                <option value="price-high">Price ↓</option>
+                <option value="experience">Experience</option>
+              </select>
+            </div>
           </div>
         </div>
 

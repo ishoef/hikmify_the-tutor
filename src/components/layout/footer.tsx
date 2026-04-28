@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import {Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FaFacebook } from "react-icons/fa";
 import { BsLinkedin, BsTwitter } from "react-icons/bs";
 import { LiaLinkedin } from "react-icons/lia";
+import Logo from "../common/logo";
 
 export default function Footer() {
   return (
@@ -15,14 +16,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* BRAND */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 bg-[#153151] rounded-xl flex items-center justify-center text-white font-bold">
-                H
-              </div>
-              <span className="text-lg font-semibold text-foreground">
-                HikmiFy
-              </span>
-            </div>
+            <Logo />
 
             <p className="text-sm text-muted-foreground max-w-xs">
               Book sessions with expert tutors and level up your skills with
@@ -80,7 +74,10 @@ export default function Footer() {
               <Link href="/contact" className="hover:text-[#153151] transition">
                 Contact
               </Link>
-              <Link href="/privacy-policy" className="hover:text-[#153151] transition">
+              <Link
+                href="/privacy-policy"
+                className="hover:text-[#153151] transition"
+              >
                 Privacy Policy
               </Link>
             </div>
@@ -119,10 +116,16 @@ export default function Footer() {
             <Link href="/terms" className="hover:text-[#153151] transition">
               Terms
             </Link>
-            <Link href="/privacy-policy" className="hover:text-[#153151] transition">
+            <Link
+              href="/privacy-policy"
+              className="hover:text-[#153151] transition"
+            >
               Privacy
             </Link>
-            <Link href="/cookie-policy" className="hover:text-[#153151] transition">
+            <Link
+              href="/cookie-policy"
+              className="hover:text-[#153151] transition"
+            >
               Cookies
             </Link>
           </div>
