@@ -23,6 +23,8 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import * as Z from "zod";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 const formSchema = Z.object({
   password: Z.string().min(8, "Minimum length is 8"),
@@ -47,10 +49,28 @@ export default function LoginForm() {
       try {
         setLoading(true);
 
-        console.log("Login data:", value);
-
         // 👉 Replace with real API
         await new Promise((res) => setTimeout(res, 1500));
+        const { data, error } = await authClient.signIn.email({
+          email: value.email,
+          password: value.password,
+        });
+
+        if (error) {
+          console.log("Error from LoginForm: ", error.message);
+          toast.error("Somthing went wrongt", {
+            description: error.message,
+          });
+        }
+
+        if (data) {
+          toast.success(`Ahlan Sahlan ${data.user.name}`, {
+            description: "You are loged in successfully",
+          });
+          form.reset();
+        }
+
+        console.log("Login data:", value);
       } catch (err) {
         console.error(err);
       } finally {
@@ -110,9 +130,7 @@ export default function LoginForm() {
                   field.state.meta.isTouched && !field.state.meta.isValid;
                 return (
                   <Field>
-                    <FieldLabel className="pt-4" htmlFor="password">
-                      Password
-                    </FieldLabel>
+                    <FieldLabel htmlFor="password">Password</FieldLabel>
 
                     <div className="relative">
                       <Input
@@ -160,7 +178,7 @@ export default function LoginForm() {
               type="submit"
               disabled={loading}
               className="
-                w-full mt-5 rounded-xl text-white font-medium
+                w-full rounded-xl text-white font-medium
                 bg-[#153151] hover:bg-[#1f4a7a]
                 transition-all duration-200 ease-in-out
                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#153151]
