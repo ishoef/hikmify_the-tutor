@@ -53,7 +53,7 @@ export default function Footer() {
               <Link href="#" className="hover:text-[#153151] transition">
                 Become a Tutor
               </Link>
-              <Link href="#" className="hover:text-[#153151] transition">
+              <Link href="/subscription" className="hover:text-[#153151] transition">
                 Pricing
               </Link>
               <Link href="#" className="hover:text-[#153151] transition">
@@ -68,7 +68,7 @@ export default function Footer() {
               <Link href="/about" className="hover:text-[#153151] transition">
                 About Us
               </Link>
-              <Link href="#" className="hover:text-[#153151] transition">
+              <Link href="/careers" className="hover:text-[#153151] transition">
                 Careers
               </Link>
               <Link href="/contact" className="hover:text-[#153151] transition">
