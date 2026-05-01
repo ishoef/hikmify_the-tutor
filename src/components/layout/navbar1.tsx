@@ -169,54 +169,57 @@ const Navbar1 = ({
             {/* Logo */}
             <Logo />
 
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="rounded-xl">
-                  <Menu className="size-4" />
-                </Button>
-              </SheetTrigger>
+            <div className="flex items-center gap-2">
+              <ModeToggle></ModeToggle>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="icon" className="rounded-xl">
+                    <Menu className="size-4" />
+                  </Button>
+                </SheetTrigger>
 
-              <SheetContent className="p-0 flex flex-col">
-                {/* HEADER */}
-                <div className="flex items-center justify-between px-5 py-4 border-b bg-background/80 backdrop-blur">
-                  <Logo />
-                </div>
+                <SheetContent className="p-0 flex flex-col">
+                  {/* HEADER */}
+                  <div className="flex items-center justify-between px-5 py-4 border-b bg-background/80 backdrop-blur">
+                    <Logo />
+                  </div>
 
-                {/* CONTENT */}
-                <div className="flex-1 overflow-y-auto px-5 py-6 space-y-6">
-                  {/* NAV LINKS */}
-                  <div className="flex flex-col gap-2">
-                    {menu.map((item) => (
-                      <Link
-                        key={item.title}
-                        href={item.url}
-                        className="text-base font-medium py-3 px-3 rounded-xl hover:bg-muted transition-colors"
+                  {/* CONTENT */}
+                  <div className="flex-1 overflow-y-auto px-5 py-6 space-y-6">
+                    {/* NAV LINKS */}
+                    <div className="flex flex-col gap-2">
+                      {menu.map((item) => (
+                        <Link
+                          key={item.title}
+                          href={item.url}
+                          className="text-base font-medium py-3 px-3 rounded-xl hover:bg-muted transition-colors"
+                        >
+                          {item.title}
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* DIVIDER */}
+                    <div className="border-t pt-5 space-y-3">
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="w-full rounded-xl"
                       >
-                        {item.title}
-                      </Link>
-                    ))}
-                  </div>
+                        <Link href={auth.login.url}>{auth.login.title}</Link>
+                      </Button>
 
-                  {/* DIVIDER */}
-                  <div className="border-t pt-5 space-y-3">
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="w-full rounded-xl"
-                    >
-                      <Link href={auth.login.url}>{auth.login.title}</Link>
-                    </Button>
-
-                    <Button
-                      asChild
-                      className="w-full bg-[#153151] hover:bg-[#1f4a7a] text-white rounded-xl"
-                    >
-                      <Link href={auth.signup.url}>{auth.signup.title}</Link>
-                    </Button>
+                      <Button
+                        asChild
+                        className="w-full bg-[#153151] hover:bg-[#1f4a7a] text-white rounded-xl"
+                      >
+                        <Link href={auth.signup.url}>{auth.signup.title}</Link>
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </div>
