@@ -50,7 +50,7 @@ export default function Footer() {
               <Link href="#" className="hover:text-[#153151] transition">
                 Find Tutors
               </Link>
-              <Link href="#" className="hover:text-[#153151] transition">
+              <Link href="/become-tutor" className="hover:text-[#153151] transition">
                 Become a Tutor
               </Link>
               <Link href="/subscription" className="hover:text-[#153151] transition">

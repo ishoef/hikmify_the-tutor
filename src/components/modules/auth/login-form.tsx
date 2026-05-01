@@ -7,6 +7,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import GoogleLoginButton from "./google-login";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -52,7 +53,10 @@ export default function LoginForm() {
 
         {/* Forgot */}
         <div className="flex justify-end text-sm">
-          <Link href="/forgot-password" className="text-muted-foreground hover:text-[#153151]">
+          <Link
+            href="/forgot-password"
+            className="text-muted-foreground hover:text-[#153151]"
+          >
             Forgot password?
           </Link>
         </div>
@@ -74,9 +78,7 @@ export default function LoginForm() {
       </div>
 
       {/* Social */}
-      <Button variant="outline" className="w-full rounded-xl">
-        Continue with Google
-      </Button>
+      <GoogleLoginButton />
 
       {/* Footer */}
       <p className="text-sm text-center text-muted-foreground mt-6">

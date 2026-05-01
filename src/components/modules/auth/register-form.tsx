@@ -7,6 +7,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import GoogleLoginButton from "./google-login";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -108,9 +109,7 @@ export default function RegisterForm() {
       </div>
 
       {/* Social */}
-      <Button variant="outline" className="w-full rounded-xl">
-        Continue with Google
-      </Button>
+      <GoogleLoginButton />
 
       {/* Footer */}
       <p className="text-sm text-center text-muted-foreground mt-6">

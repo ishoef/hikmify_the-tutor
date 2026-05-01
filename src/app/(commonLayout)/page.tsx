@@ -13,15 +13,15 @@ export default function HomePage() {
   return (
     <div className="bg-background">
       <Hero />
-      <States /> 
-      <TutorSection /> 
-      <Categories /> 
-      <HowItWorks /> 
-      <Testimonial /> 
-      <OurVision /> 
-      <OurTeam /> 
-      <FollowUs/>
-      <FinalCTA /> 
+      <States />
+      <TutorSection />
+      <Categories />
+      <HowItWorks />
+      <Testimonial />
+      <OurVision />
+      <OurTeam />
+      <FollowUs />
+      <FinalCTA />
     </div>
   );
 }
