@@ -4,6 +4,7 @@ import Image from "next/image";
 import { GraduationCap, Award, Play } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import VideoModal from "@/components/modals/videoModal";
 
 export default function Hero() {
   return (
@@ -37,13 +38,10 @@ export default function Hero() {
                 Find Your Tutor
               </Button>
             </Link>
-            <Button
-              size="lg"
-              variant="outline"
-              className="px-10 py-7 rounded-2xl text-base font-medium flex items-center gap-2"
-            >
-              <Play size={20} /> Watch 1-min video
-            </Button>
+            <VideoModal
+              videoUrl="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              buttonText="Watch 1-min video"
+            />
           </div>
         </div>
 

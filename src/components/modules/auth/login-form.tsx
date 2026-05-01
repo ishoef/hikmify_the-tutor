@@ -25,6 +25,7 @@ import {
 import * as Z from "zod";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = Z.object({
   password: Z.string().min(8, "Minimum length is 8"),
@@ -34,6 +35,8 @@ const formSchema = Z.object({
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const form = useForm({
     defaultValues: {
@@ -68,6 +71,7 @@ export default function LoginForm() {
             description: "You are loged in successfully",
           });
           form.reset();
+          router.push("/");
         }
 
         console.log("Login data:", value);

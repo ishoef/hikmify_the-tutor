@@ -20,6 +20,7 @@ import { ModeToggle } from "./ModeTogglle";
 import Link from "next/link";
 import Logo from "../common/logo";
 import React from "react";
+import ProfileAvatar from "./ProfileAvatar";
 
 interface MenuItem {
   title: string;
@@ -137,7 +138,7 @@ const Navbar1 = ({
           <div className="flex items-center gap-3">
             <ModeToggle />
 
-            <Button
+            {/* <Button
               asChild
               variant="ghost"
               className="text-muted-foreground hover:text-[#153151]"
@@ -150,7 +151,9 @@ const Navbar1 = ({
               className="bg-[#153151] hover:bg-[#1f4a7a] text-white rounded-xl px-5"
             >
               <Link href={auth.signup.url}>{auth.signup.title}</Link>
-            </Button>
+            </Button> */}
+
+            <ProfileAvatar/>
           </div>
         </nav>
 
@@ -193,20 +196,7 @@ const Navbar1 = ({
 
                     {/* DIVIDER */}
                     <div className="border-t pt-5 space-y-3">
-                      <Button
-                        asChild
-                        variant="outline"
-                        className="w-full rounded-xl"
-                      >
-                        <Link href={auth.login.url}>{auth.login.title}</Link>
-                      </Button>
-
-                      <Button
-                        asChild
-                        className="w-full bg-[#153151] hover:bg-[#1f4a7a] text-white rounded-xl"
-                      >
-                        <Link href={auth.signup.url}>{auth.signup.title}</Link>
-                      </Button>
+                      <ProfileAvatar/>
                     </div>
                   </div>
                 </SheetContent>

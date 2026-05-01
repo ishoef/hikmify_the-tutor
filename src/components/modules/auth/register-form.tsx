@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/field";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 // ✅ Zod schema
 const formSchema = Z.object({
@@ -44,6 +45,8 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const form = useForm({
     defaultValues: {
@@ -70,7 +73,7 @@ export default function RegisterForm() {
         // await new Promise((res) => setTimeout(res, 1500));
         const { data, error } = await authClient.signUp.email({
           email: value.email,
-          password: value.password,
+          password: value.confirmPassword,
           name: value.name,
         });
 
@@ -85,7 +88,9 @@ export default function RegisterForm() {
         if (data) {
           toast.success("User Created Successfully");
           form.reset();
+          router.push("/");
         }
+        
       } catch (err) {
         console.error(err);
       } finally {
