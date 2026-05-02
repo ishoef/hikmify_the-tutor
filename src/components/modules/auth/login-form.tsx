@@ -134,7 +134,15 @@ export default function LoginForm() {
                   field.state.meta.isTouched && !field.state.meta.isValid;
                 return (
                   <Field>
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                    <div className="flex justify-between text-sm">
+                      <FieldLabel htmlFor="password">Password</FieldLabel>
+                      <Link
+                        href="/forgot-password"
+                        className="text-muted-foreground hover:text-[#153151]"
+                      >
+                        Forgot password?
+                      </Link>
+                    </div>
 
                     <div className="relative">
                       <Input
@@ -159,19 +167,10 @@ export default function LoginForm() {
                     </div>
 
                     {/* FORGOT */}
-                    <div className="flex justify-between text-sm">
-                      {isInvalid ? (
-                        <FieldError errors={field.state.meta.errors} />
-                      ) : (
-                        <div></div>
-                      )}
-                      <Link
-                        href="/forgot-password"
-                        className="text-muted-foreground hover:text-[#153151]"
-                      >
-                        Forgot password?
-                      </Link>
-                    </div>
+
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
                   </Field>
                 );
               }}

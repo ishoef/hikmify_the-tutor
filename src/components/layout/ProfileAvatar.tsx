@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { toast } from "sonner";
 
 export default function ProfileAvatar() {
   const [user, setUser] = useState<{
@@ -22,7 +23,10 @@ export default function ProfileAvatar() {
     image?: string | null;
   } | null>(null);
   const [loading, setLoading] = useState(true);
-//   const router = useRouter();
+  //   const router = useRouter();
+
+  const priflePhotoURL =
+    "https://images.unsplash.com/photo-1614680376739-414d95ff43df?w=500";
 
   useEffect(() => {
     let mounted = true;
@@ -65,18 +69,30 @@ export default function ProfileAvatar() {
     );
   }
 
+  const handleLogout = () => {
+    toast("Are you sure you want to logout?", {
+      description: "You will be signed out of your account.",
+      action: {
+        label: "Logout",
+        onClick: async () => {
+          await authClient.signOut();
+          window.location.href = "/login";
+        },
+      },
+      cancel: {
+        label: "Cancel",
+        onClick: () => {},
+      },
+    });
+  };
+
   // ✅ LOGGED IN
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="cursor-pointer rounded-full border focus:outline-none focus:ring-2 focus:ring-ring">
           <Avatar className="h-9 w-9">
-            <AvatarImage
-              src={
-                user.image ||
-                "https://images.unsplash.com/photo-1614680376739-414d95ff43df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjMxfHxkZW1vJTIwYXZhdGFyfGVufDB8fDB8fHww"
-              }
-            />
+            <AvatarImage src={user.image || priflePhotoURL} />
             <AvatarFallback>
               {user.name?.charAt(0)?.toUpperCase() || "U"}
             </AvatarFallback>
@@ -110,10 +126,7 @@ export default function ProfileAvatar() {
 
         {/* Logout */}
         <DropdownMenuItem
-          onClick={async () => {
-            await authClient.signOut();
-            window.location.reload(); // ✅ no full reload
-          }}
+          onClick={() => handleLogout()}
           className="text-destructive focus:text-destructive"
         >
           Logout

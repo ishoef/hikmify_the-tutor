@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { FaFacebook } from "react-icons/fa";
 import { BsLinkedin, BsTwitter } from "react-icons/bs";
 import { LiaLinkedin } from "react-icons/lia";
-import Logo from "../common/logo";
+import Logo from "../shared/logo";
 
 export default function Footer() {
   return (
@@ -50,10 +50,16 @@ export default function Footer() {
               <Link href="#" className="hover:text-[#153151] transition">
                 Find Tutors
               </Link>
-              <Link href="/become-tutor" className="hover:text-[#153151] transition">
+              <Link
+                href="/become-tutor"
+                className="hover:text-[#153151] transition"
+              >
                 Become a Tutor
               </Link>
-              <Link href="/subscription" className="hover:text-[#153151] transition">
+              <Link
+                href="/subscription"
+                className="hover:text-[#153151] transition"
+              >
                 Pricing
               </Link>
               <Link href="#" className="hover:text-[#153151] transition">

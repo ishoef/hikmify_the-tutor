@@ -136,6 +136,7 @@ export default function BecomeTutorForm() {
           <Label className="text-base font-medium">Professional Bio</Label>
           <Textarea
             className="min-h-35"
+            placeholder="Write a short professional bio (e.g. I am a Math tutor with 5+ years of experience helping students excel...)"
             value={formData.bio}
             onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
           />
@@ -167,24 +168,30 @@ export default function BecomeTutorForm() {
 
         {/* QUALIFICATION */}
         <div className="bg-card border border-border rounded-3xl p-8 grid md:grid-cols-2 gap-8">
+          {/* QUALIFICATION */}
           <div>
             <Label className="text-base font-medium pb-3">
               Highest Qualification
             </Label>
             <Input
+              placeholder="e.g. B.Sc in Computer Science, Harvard University"
               value={formData.qualification}
               onChange={(e) =>
                 setFormData({ ...formData, qualification: e.target.value })
               }
             />
             {errors.qualification && (
-              <p className="text-red-500 text-xs pt-3">{errors.qualification}</p>
+              <p className="text-red-500 text-xs pt-3">
+                {errors.qualification}
+              </p>
             )}
           </div>
 
+          {/* EXPERIENCE */}
           <div>
             <Label className="text-base font-medium pb-3">Experience</Label>
             <Input
+              placeholder="e.g. 3 years teaching experience"
               value={formData.experience}
               onChange={(e) =>
                 setFormData({ ...formData, experience: e.target.value })
@@ -201,6 +208,7 @@ export default function BecomeTutorForm() {
           <Label className="text-base font-medium">Hourly Rate</Label>
           <Input
             type="number"
+            placeholder="e.g. 25"
             value={formData.hourlyRate || ""}
             onChange={(e) =>
               setFormData({ ...formData, hourlyRate: Number(e.target.value) })
@@ -238,6 +246,7 @@ export default function BecomeTutorForm() {
         <div className="bg-card border border-border rounded-3xl p-8 space-y-3">
           <Label className="text-base font-medium">Category</Label>
           <Input
+            placeholder="e.g. Web Development, Science, Design"
             value={formData.categoryName}
             onChange={(e) =>
               setFormData({ ...formData, categoryName: e.target.value })

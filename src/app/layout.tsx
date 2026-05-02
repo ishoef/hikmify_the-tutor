@@ -4,8 +4,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/providers/themesProvider";
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,9 +48,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <TooltipProvider delayDuration={0}>{children}</TooltipProvider>
+
+          <Toaster position="top-right" richColors />
         </ThemeProvider>
-        <Toaster position="top-right" richColors />
       </body>
     </html>
   );
