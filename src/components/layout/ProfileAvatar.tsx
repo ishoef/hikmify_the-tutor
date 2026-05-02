@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,108 +13,93 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { toast } from "sonner";
-import { useAuth } from "@/hooks/use-auth/use-auth";
+
+import { useAuth } from "@/hooks/use-auth/useAuth";
 
 export default function ProfileAvatar() {
-  //   const router = useRouter();
-
-  const priflePhotoURL =
-    "https://images.unsplash.com/photo-1614680376739-414d95ff43df?w=500";
-
+  const router = useRouter();
   const { user, loading } = useAuth();
 
-  // ⚡ Skeleton (lighter + faster)
+  const defaultAvatar =
+    "https://images.unsplash.com/photo-1614680376739-414d95ff43df?w=500";
+
+  // ⏳ Loading
   if (loading) {
     return <div className="h-9 w-9 rounded-full bg-muted animate-pulse" />;
   }
 
-  // ❌ NOT LOGGED IN
+  // ❌ Not logged in
   if (!user) {
     return (
       <div className="flex items-center gap-2">
-        <Button
-          asChild
-          variant="ghost"
-          className="text-muted-foreground hover:text-primary"
-        >
+        <Button asChild variant="ghost">
           <Link href="/login">Login</Link>
         </Button>
 
-        <Button
-          asChild
-          className="bg-primary text-primary-foreground hover:opacity-90 rounded-xl px-5"
-        >
+        <Button asChild className="bg-primary text-white">
           <Link href="/register">Sign up</Link>
         </Button>
       </div>
     );
   }
 
-  const handleLogout = () => {
-    toast("Are you sure you want to logout?", {
-      description: "You will be signed out of your account.",
-      action: {
-        label: "Logout",
-        onClick: async () => {
-          await authClient.signOut();
-          window.location.href = "/login";
-        },
-      },
-      cancel: {
-        label: "Cancel",
-        onClick: () => {},
-      },
-    });
+  // 🚪 Logout
+  const handleLogout = async () => {
+    try {
+      await authClient.signOut();
+
+      toast.success("Logged out successfully");
+
+      router.push("/login"); // ✅ smooth navigation
+      router.refresh(); // ✅ re-render navbar
+    } catch (err: any) {
+      toast.error("Logout failed", {
+        description: err.message,
+      });
+    }
   };
 
-  // ✅ LOGGED IN
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="cursor-pointer rounded-full border focus:outline-none focus:ring-2 focus:ring-ring">
+        <button className="rounded-full border hover:scale-105 transition focus:outline-none focus:ring-2 focus:ring-ring">
           <Avatar className="h-9 w-9">
-            <AvatarImage src={(user as any)?.image || priflePhotoURL} />
+            <AvatarImage src={user?.image || defaultAvatar} />
             <AvatarFallback>
-              {(user as any)?.name?.charAt(0)?.toUpperCase() || "U"}
+              {user?.name?.charAt(0)?.toUpperCase() || "U"}
             </AvatarFallback>
           </Avatar>
         </button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-56 p-2">
-        {/* User Info */}
+        {/* 👤 USER INFO */}
         <div className="px-2 py-2">
-          <p className="text-sm font-medium leading-none">
-            {(user as any)?.name}
-          </p>
-          <p className="text-xs text-muted-foreground mt-1">
-            {(user as any)?.email}
-          </p>
+          <p className="text-sm font-medium">{user?.name}</p>
+          <p className="text-xs text-muted-foreground">{user?.email}</p>
         </div>
 
         <DropdownMenuSeparator />
 
-        {/* Links */}
+        {/* 🔗 LINKS */}
         <DropdownMenuItem asChild>
           <Link href="/profile">Profile</Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem asChild>
-          <Link href="/settings">Settings</Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
           <Link href="/dashboard">Dashboard</Link>
         </DropdownMenuItem>
 
+        <DropdownMenuItem asChild>
+          <Link href="/settings">Settings</Link>
+        </DropdownMenuItem>
+
         <DropdownMenuSeparator />
 
-        {/* Logout */}
+        {/* 🚪 LOGOUT */}
         <DropdownMenuItem
-          onClick={() => handleLogout()}
+          onClick={handleLogout}
           className="text-destructive focus:text-destructive"
         >
           Logout
