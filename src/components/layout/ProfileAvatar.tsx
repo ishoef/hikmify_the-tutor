@@ -15,32 +15,15 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/use-auth/use-auth";
 
 export default function ProfileAvatar() {
-  const [user, setUser] = useState<{
-    name?: string | null;
-    email?: string | null;
-    image?: string | null;
-  } | null>(null);
-  const [loading, setLoading] = useState(true);
   //   const router = useRouter();
 
   const priflePhotoURL =
     "https://images.unsplash.com/photo-1614680376739-414d95ff43df?w=500";
 
-  useEffect(() => {
-    let mounted = true;
-
-    authClient.getSession().then((session) => {
-      if (!mounted) return;
-      setUser(session?.data?.user || null);
-      setLoading(false);
-    });
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  const { user, loading } = useAuth();
 
   // ⚡ Skeleton (lighter + faster)
   if (loading) {
@@ -92,9 +75,9 @@ export default function ProfileAvatar() {
       <DropdownMenuTrigger asChild>
         <button className="cursor-pointer rounded-full border focus:outline-none focus:ring-2 focus:ring-ring">
           <Avatar className="h-9 w-9">
-            <AvatarImage src={user.image || priflePhotoURL} />
+            <AvatarImage src={(user as any)?.image || priflePhotoURL} />
             <AvatarFallback>
-              {user.name?.charAt(0)?.toUpperCase() || "U"}
+              {(user as any)?.name?.charAt(0)?.toUpperCase() || "U"}
             </AvatarFallback>
           </Avatar>
         </button>
@@ -103,8 +86,12 @@ export default function ProfileAvatar() {
       <DropdownMenuContent align="end" className="w-56 p-2">
         {/* User Info */}
         <div className="px-2 py-2">
-          <p className="text-sm font-medium leading-none">{user.name}</p>
-          <p className="text-xs text-muted-foreground mt-1">{user.email}</p>
+          <p className="text-sm font-medium leading-none">
+            {(user as any)?.name}
+          </p>
+          <p className="text-xs text-muted-foreground mt-1">
+            {(user as any)?.email}
+          </p>
         </div>
 
         <DropdownMenuSeparator />

@@ -17,8 +17,17 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Camera, LogOut, Save, User, Mail, Calendar } from "lucide-react";
+import {
+  Camera,
+  LogOut,
+  Save,
+  User,
+  Mail,
+  Calendar,
+  Trash2,
+} from "lucide-react";
 import LogoutButton from "@/components/modules/auth/LogoutButton";
+import Link from "next/link";
 
 export default function ProfilePage() {
   const [user, setUser] = useState<any>(null);
@@ -165,7 +174,7 @@ export default function ProfilePage() {
 
           {/* Quick Stats */}
           <Card>
-            <CardContent className="pt-6">
+            <CardContent className="">
               <div className="flex justify-between text-sm">
                 <div>
                   <p className="text-muted-foreground">Member since</p>
@@ -177,6 +186,12 @@ export default function ProfilePage() {
                 </div>
               </div>
             </CardContent>
+          </Card>
+
+          <Card className="p-2">
+            <Link href={"/settings"}>
+              <Button className="cursor-pointer w-full"> Settings </Button>
+            </Link>
           </Card>
         </div>
 
@@ -249,12 +264,27 @@ export default function ProfilePage() {
               >
                 Enable Two-Factor Authentication
               </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-start rounded-xl h-12 text-destructive hover:bg-destructive/10"
-              >
-                Delete Account
-              </Button>
+
+              <Separator />
+              <div className="pt-4">
+                <p className="text-sm font-medium text-destructive mb-3">
+                  Danger Zone
+                </p>
+                <div className="border border-destructive/30 rounded-3xl p-6">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="font-semibold">Delete my account</p>
+                      <p className="text-sm text-muted-foreground">
+                        This action is permanent and cannot be undone.
+                      </p>
+                    </div>
+                    <Button variant="destructive" className="rounded-xl">
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Delete Account
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
