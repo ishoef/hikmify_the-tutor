@@ -29,11 +29,11 @@ export default function Hero() {
             scheduling, real results, and affordable prices.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className=" flex flex-col sm:flex-row gap-4">
             <Link href="/tutors">
               <Button
                 size="lg"
-                className="bg-[#153151] hover:bg-[#1f4a7a] text-white px-10 py-7 rounded-2xl text-base font-medium"
+                className="cursor-pointer bg-[#153151] hover:bg-[#1f4a7a] text-white px-10 py-7 rounded-2xl text-base font-medium"
               >
                 Find Your Tutor
               </Button>

@@ -20,7 +20,7 @@ export default function VideoModal({
         <Button
           variant="outline"
           size="lg"
-          className={`flex items-center gap-2 rounded-2xl px-10 py-7 ${className}`}
+          className={`cursor-pointer flex items-center gap-2 rounded-2xl px-10 py-7 ${className}`}
         >
           <Play size={20} />
           {buttonText}
