@@ -121,8 +121,51 @@ export default function ProfilePageContent() {
 
   if (!user) {
     return (
-      <div className="flex min-h-[70vh] items-center justify-center">
-        <p className="text-red-500">Unable to load profile</p>
+      <div className="flex min-h-[70vh] flex-col items-center justify-center px-4 text-center">
+        {/* Icon */}
+        <div className="mb-4 rounded-full bg-red-100 p-4">
+          <svg
+            className="h-8 w-8 text-red-500"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 9v2m0 4h.01M12 3a9 9 0 100 18 9 9 0 000-18z"
+            />
+          </svg>
+        </div>
+
+        {/* Title */}
+        <h2 className="text-xl font-semibold text-foreground mb-2">
+          Unable to load profile
+        </h2>
+
+        {/* Description */}
+        <p className="text-sm text-muted-foreground max-w-md mb-6">
+          Something went wrong while fetching your account information. Please
+          try again or log in again.
+        </p>
+
+        {/* Actions */}
+        <div className="flex gap-3">
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 rounded-md bg-primary text-white hover:opacity-90 transition"
+          >
+            Retry
+          </button>
+
+          <a
+            href="/login"
+            className="px-4 py-2 rounded-md border hover:bg-muted transition"
+          >
+            Go to Login
+          </a>
+        </div>
       </div>
     );
   }

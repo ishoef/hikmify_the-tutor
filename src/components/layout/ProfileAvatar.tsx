@@ -45,19 +45,21 @@ export default function ProfileAvatar() {
   }
 
   // 🚪 Logout
-  const handleLogout = async () => {
-    try {
-      await authClient.signOut();
-
-      toast.success("Logged out successfully");
-
-      router.push("/login"); // ✅ smooth navigation
-      router.refresh(); // ✅ re-render navbar
-    } catch (err: any) {
-      toast.error("Logout failed", {
-        description: err.message,
-      });
-    }
+  const handleLogout = () => {
+    toast("Are you sure you want to logout?", {
+      description: "You will be signed out of your account.",
+      action: {
+        label: "Logout",
+        onClick: async () => {
+          await authClient.signOut();
+          window.location.href = "/login";
+        },
+      },
+      cancel: {
+        label: "Cancel",
+        onClick: () => {},
+      },
+    });
   };
 
   return (
