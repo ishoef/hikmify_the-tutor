@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { env } from "@/env";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner"; // or your toast lib
 
@@ -8,7 +9,7 @@ export default function GoogleLoginButton() {
     try {
       const { data, error } = await authClient.signIn.social({
         provider: "google",
-        callbackURL: "http://localhost:3000",
+        callbackURL: env.FRONTEND_URL,
       });
 
       toast.error("Login Failed ❌", {
