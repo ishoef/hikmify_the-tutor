@@ -9,12 +9,16 @@ export default function GoogleLoginButton() {
     try {
       const { data, error } = await authClient.signIn.social({
         provider: "google",
-        callbackURL: env.FRONTEND_URL,
+        callbackURL: env.NEXT_PUBLIC_FRONTEND_URL,
       });
 
-      toast.error("Login Failed ❌", {
-        description: error?.message || "Something went wrong",
-      });
+      if (error) {
+        toast.error("Login Failed ❌", {
+          description: error.message || "Something went wrong",
+        });
+
+        return;
+      }
 
       toast.success("Login successful 🎉");
 
